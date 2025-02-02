@@ -1,0 +1,928 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>جمعية أمل تسناس للتنمية و الخدمات الاجتماعية والماء الصالح للشرب</title>
+    <style>
+
+        body {
+            
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0px;
+            background-color: #f0f0f0;
+        }
+        #container {
+            max-width: 600px;
+            margin-top: 70px;
+            background-color: white;
+            padding: 10px 10px;;
+            border: 2px solid #000;
+        }
+        h1 {
+            text-align: center;
+            font-size: 18px;
+            margin-bottom: 20px;
+        }
+        .form-group {
+            margin-bottom: 10px;
+        }
+        label {
+            display: inline-block;
+            width: 150px;
+        }
+        input {
+            width: 200px;
+            padding: 5px;
+            text-align: center;
+            font-weight: bold;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 5px;
+        }
+        th, td {
+            border: 1px solid #000;
+            padding: 8px;
+            text-align: center;
+        }
+        #previousInfo {
+            margin-top: 1px;
+            padding: 10px;
+            background-color: #e7f3fe;
+            border: 1px solid #3498db;
+            border-radius: 4px;
+        }
+        button {
+            display: block;
+            width: 100%;
+            padding: 10px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            cursor: pointer;
+            margin-top: 20px;
+            
+        }
+        button:hover {
+            background-color: #45a049;
+            opacity: 0.9;
+            transform: translateY(-2px);
+            }
+    </style>
+<script defer data-domain="tissinasol.tiiny.site" src="https://analytics.tiiny.site/js/plausible.js"></script><script type="text/javascript" src="https://tiiny.host/ad-script.js"></script></head>
+<body>
+<div id="content" style="display: none; margin: 10px;">
+    <div id="container">
+    
+        <div id="previousInfo" style="display:none; text-align: center;"></div>
+        <div style="text-align: center;" id="meterInput">
+        
+        
+        <div id="consumptionInput" style="display:none; text-align: center;">
+        <div class="form-group">
+        <label for="customerName">اسم المستهلك:</label>
+        <input type="text" id="customerName" required placeholder="اكتب اسم المستهلك هنا...">
+        </div>
+        </div>
+            <div class="form-group">
+                <label for="meterNumber">رقم العداد:</label>
+     <input oninput="checkMeter()" type="text" id="meterNumber" required placeholder="أدخل رقم العداد هنا...">
+            </div>
+
+        </div>
+
+        <div id="consumptionInpu" style="display:none; text-align: center;">
+      
+            <div class="form-group">
+                <label for="currentReading">الاستهلاك الإجمالي:</label>
+                <input type="number" id="currentReading" required placeholder="اكتب الاستهلاك الموجود على العداد...">
+            </div>
+            <button onclick="addEntry()">حفظ</button>
+        </div>
+        </div>
+         
+        <br>
+        <br>
+       <div id="dataTable" style="border: 2px solid black; margin-top:-20px; padding: 4px; display:;">   
+       <div id="ddataTable" style="border: 2px solid black; padding: 8px;">   
+
+        <div>
+        <h1 style=" width: 96%; margin-right: 1%;">جمعية أمل تسناس للتنمية و الخدمات الاجتماعية والماء الصالح للشرب</h1>
+        <hr>
+<div id="consumptionInput" style="display:;">
+    <div class="form-group">
+
+       <table style="margin-top: -40px;">
+       <tr>
+        <td style="font-weight: bold; text-align: right; padding: 0px; border: none; border-right: 1px solid black; "  for="noCompte">العداد:</td>
+        <td style="text-align: center; padding: 0px; border: none; border-left: 1px solid black; " id="displayMeterNumber"></td>
+        <td style="font-weight: bold;text-align: center; padding: 0px; border: none; " for="customerName">الاسم:</td>
+        <td style="text-align: right; padding: 0px; border: none; border-left: 1px solid black; " id="displayCustomerName"></td>
+        </tr>
+        <tr>
+        <td style="font-weight: bold;text-align: right; padding: 0px; border: none; border-right: 1px solid black; " for="currentReading">الاستهلاك:</td>
+        <td style="text-align: center; padding: 0px; border: none; border-left: 1px solid black; " id="displayCurrentReading"></td>
+        <td style="font-weight: bold;text-align: center; padding: 0px; border: none;" for="Total">المجموع:</td>
+        <td style="text-align: center; padding: 0px; border: none; border-left: 1px solid black; " id="Total"></td>
+        </tr>
+        <br>
+        <br>
+        </table>
+    </div>
+</div>
+          </div>  
+<table>
+<tr>
+    <td> المساهمة</td>
+    <td> الاستهلاك</td>
+    <td> الغرامة</td>
+    <td> المجموع</td>
+</tr>
+
+            <tbody id="tableBody"></tbody>
+        </table>
+
+<table style="width: 100%; border-collapse: collapse; border: 1px solid #ddd;">
+        <tr>
+            <th style="width: 70%; padding: 15px; text-align: right; border: 1px solid #ddd;">
+                <h4 style="margin: 0;">توقيع الزبون: </h4>
+            </th>
+            <th style="width: 30%; padding: 15px; text-align: left; border: 1px solid #ddd;">
+                <h3 id="currentDate" style="margin: 0;"></h3>
+            </th>
+        </tr>
+    </table>
+</div></div>
+<div>
+<div id="doublePrintArea" style="display:none;">
+    <div id="dataTable1"></div>
+    <div style="page-break-before: always;"></div>
+    <div id="dataTable2"></div>
+</div>
+
+    </div>
+    
+    <div id="btns" style="position: fixed; top: -20px; left: 10px; right: 10px; display: flex; justify-content: space-around; padding: 0px;">
+    <button onclick="downloadPDF()" id="downloadPDFButton" style="padding: 15px 15px; background-color: #3498db; color: white; border: none; border-radius: 8px; font-size: 16px; font-weight: bold; cursor: pointer; transition: all 0.3s ease;">طباعة جميع الفواتير</button>
+    <button onclick="downloadImage()" id="downloadImageButton" style="padding: 15px 15px; background-color: #2ecc71; color: white; border: none; border-radius: 8px; font-size: 16px; font-weight: bold; cursor: pointer; transition: all 0.3s ease;">طباعة الفاتورة الحالية</button>
+    <button onclick="downloadCustomerData()">تنزيل بيانات العملاء</button>
+    
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+</div>
+
+   <div id="expiredMessage" style="display: none; color: red; font-size: 24px; text-align: center; margin-top: 50%; border: 20px solid red;">
+   <p>لقد انتهت صلاحية هذا الملف.</p>
+   </div>
+    <script>
+    // الثوابت
+    const pricePerTon = 60; // سعر الطن بالدرهم
+    const contributionFee = 200; // مبلغ المساهمة الثابت
+
+    // تحديد تاريخ انتهاء الصلاحية (مثال: 31 ديسمبر 2024)
+    const expirationDate = new Date('2025-11-20');
+
+
+
+        // بيانات العملاء
+        const customers = [
+{ id: 1, name: "الخطاب محمد" },
+{ id: 2, name: "العنبر محمد" },
+{ id: 3, name: "حسنى حمد" },
+{ id: 4, name: "حسنى حسن" },
+{ id: 5, name: "حسنى بوجمعة" },
+{ id: 6, name: "العماري حماد" },
+{ id: 7, name: "اقمري حسن" },
+{ id: 8, name: "العنبر لحس" },
+{ id: 9, name: "صفوان محمد" },
+{ id: 10, name: "صفوان حسن" },
+{ id: 11, name: "الفقير حسن" },
+{ id: 12, name: "اقمران حسن" },
+{ id: 13, name: "الوزي بوجمعة" },
+{ id: 14, name: "الوزي محمد" },
+{ id: 15, name: "اكوشام حماد" },
+{ id: 16, name: "تمغريت حسن" },
+{ id: 17, name: "البصراوي لحسين" },
+{ id: 18, name: "تمغريت سعيد" },
+{ id: 19, name: "اقمري تهامي" },
+{ id: 20, name: "اقمري لحسن" },
+{ id: 21, name: "اقمري عبدالله" },
+{ id: 22, name: "الحمود محمد" },
+{ id: 23, name: "هلال محمد" },
+{ id: 24, name: "الوزي حس" },
+{ id: 25, name: "تزوض المصطفى" },
+{ id: 26, name: "بنعد محمد" },
+{ id: 27, name: "بنعد لكبير" },
+{ id: 28, name: "بنعد عبدالرحمن" },
+{ id: 29, name: "المدرسة" },
+{ id: 30, name: "اجوب" },
+{ id: 31, name: "اجوب" },
+{ id: 32, name: "القمري لحسين" },
+{ id: 33, name: "بليش عبد الملك" },
+{ id: 34, name: "بليش براهيم" },
+{ id: 35, name: "هلال عبدالرحمن" },
+{ id: 36, name: "اجوب لحسين" },
+{ id: 37, name: "اجوب حماد" },
+{ id: 38, name: "بليش على" },
+{ id: 39, name: "بليش حسن" },
+{ id: 40, name: "بليش محمد" },
+{ id: 41, name: "بليش سعيد" },
+{ id: 42, name: "بوشلي عبدالله" },
+{ id: 43, name: "المرزوقي عبدالعالي" },
+{ id: 44, name: "اقمري محمد" },
+{ id: 45, name: "ؤحموا محمد" },
+{ id: 46, name: "بليش حمد" },
+{ id: 47, name: "العماري حسن" },
+{ id: 48, name: "صبر محمد" },
+{ id: 49, name: "صبري حماد" },
+{ id: 50, name: "خليل محمد" },
+{ id: 51, name: "سراجي حماد" },
+{ id: 52, name: "زدودعبدالغني" },
+{ id: 53, name: "لعلالي عمر" },
+{ id: 54, name: "المصدق عبد العزيز" },
+{ id: 55, name: "المصدق سليمان" },
+{ id: 56, name: "الناجى محمد" },
+{ id: 57, name: "الناجى عبد العزيز" },
+{ id: 58, name: "الناجى لحسين" },
+{ id: 59, name: "بليش جواد" },
+{ id: 60, name: "لعلالي عزيز" },
+{ id: 61, name: "زعفر عبد الملك" },
+{ id: 62, name: "زعفر سعيد" },
+{ id: 63, name: "بوعلام حسن" },
+{ id: 64, name: "بوعلام عبدالله" },
+{ id: 65, name: "بوعلام محمد" },
+{ id: 66, name: "بوعلام المصطفى" },
+{ id: 67, name: "بوعلام حماد" },
+{ id: 68, name: "المغراوي لحبيب" },
+{ id: 69, name: "بن لحبيب" },
+{ id: 70, name: "حسنى محمد" },
+{ id: 71, name: "الفقير لحسن" },
+{ id: 72, name: "حسنى عبدالملك" },
+{ id: 73, name: "المغراوي سعيد" },
+{ id: 74, name: "المغراوي حسن" },
+{ id: 75, name: "المغراوي محمد" },
+{ id: 76, name: "لعلالي رضوان" },
+{ id: 77, name: "الوزي لحبيب" },
+{ id: 78, name: "المغراوي عبدالله" },
+{ id: 79, name: "زدودلحسين" },
+{ id: 80, name: "زدودمحمد" },
+{ id: 81, name: "زدودحمد" },
+{ id: 82, name: "الناجى حسن" },
+{ id: 83, name: "الناجى عبد الرحمن" },
+{ id: 84, name: "بوعلام محمد" },
+{ id: 85, name: "الناجى محمد" },
+{ id: 86, name: "زدودجمال" },
+{ id: 87, name: "زدودعبد الرحيم" },
+{ id: 88, name: "الناجى حماد" },
+{ id: 89, name: "الناجى حسن" },
+{ id: 90, name: "الناجى براهيم" },
+{ id: 91, name: "زعفر محمد" },
+{ id: 92, name: "زعفر حسن" },
+{ id: 93, name: "زعفر حماد" },
+{ id: 94, name: "لبحر ي لحسين" },
+{ id: 95, name: "لبحري محمد" },
+{ id: 96, name: "خليل حمد" },
+{ id: 97, name: "لعلالي محمد" }
+        ];
+
+
+
+
+
+    // دالة فحص العداد
+function checkMeter() {
+    const meterNumber = document.getElementById('meterNumber').value;
+
+    if (meterNumber) {
+        // البحث عن العميل باستخدام رقم العداد من مصفوفة العملاء
+        const customer = customers.find(c => c.id == meterNumber);
+
+        if (customer) {
+            // البحث عن البيانات المخزنة في localStorage باستخدام رقم العداد
+            const previousData = JSON.parse(localStorage.getItem(meterNumber)) || {};
+
+            // عرض بيانات العميل
+            document.getElementById('previousInfo').innerHTML = `
+                اسم العميل: ${customer.name}<br>
+            `;
+
+            // إذا كانت هناك بيانات قراءة سابقة، عرضها
+            if (previousData.lastReading) {
+                document.getElementById('previousInfo').innerHTML += `
+                    القراءة السابقة: ${previousData.lastReading} طن<br>
+                    الاستهلاك السابق: ${previousData.lastConsumption || 0} طن<br>
+                    المبلغ السابق: ${previousData.lastAmount || 0}  
+                `;
+                document.getElementById('previousInfo').style.display = 'block';
+            } else {
+                document.getElementById('previousInfo').innerHTML += 'القراءة السابقة غير موجودة.<br>';
+                document.getElementById('previousInfo').style.display = 'block';
+            }
+
+            // إظهار الحقول الخاصة بالإدخال
+            document.getElementById('meterInput').style.display = 'block';
+            document.getElementById('consumptionInput').style.display = 'block';
+            document.getElementById('consumptionInpu').style.display = 'block';
+
+            // إذا كان هناك اسم العميل مخزن في localStorage، ضع الاسم في حقل الإدخال
+            if (previousData.customerName) {
+                document.getElementById('customerName').value = previousData.customerName;
+            } else {
+                // في حال لم يكن اسم العميل موجودًا في البيانات المخزنة
+                document.getElementById('customerName').value = customer.name;
+            }
+        } else {
+            // إذا لم يتم العثور على العميل في المصفوفة
+            document.getElementById('previousInfo').innerHTML = 'هذا رقم العداد غير مسجل في قاعدة البيانات.';
+            document.getElementById('previousInfo').style.display = 'block';
+            document.getElementById('customerName').value = '';
+        }
+    } else {
+        alert('الرجاء إدخال رقم العداد');
+    }
+}
+
+    // دالة فحص انتهاء الصلاحية
+    function checkExpiration() {
+        const now = new Date();
+        if (now > expirationDate) {
+            document.getElementById('expiredMessage').style.display = 'block';
+            document.getElementById('content').style.display = 'none';
+        } else {
+            document.getElementById('expiredMessage').style.display = 'none';
+            document.getElementById('content').style.display = 'block';
+            updateDate();
+        }
+    }
+
+    // دالة تحديث التاريخ
+    function updateDate() {
+        
+        const now = new Date();
+        // نطرح شهر واحد من التاريخ الحالي
+        now.setMonth(now.getMonth() - 1);
+        const month = String(now.getMonth() + 1).padStart(2, '0');
+        const year = now.getFullYear();
+        document.getElementById('currentDate').textContent = `${month}/${year}`;
+    }
+
+    // دالة إضافة إدخال جديد
+    function addEntry() {
+        const meterNumber = document.getElementById('meterNumber').value;
+        const customerName = document.getElementById('customerName').value;
+        const currentReading = parseFloat(document.getElementById('currentReading').value);
+
+        if (!meterNumber || !customerName || isNaN(currentReading)) {
+            alert('الرجاء إدخال جميع البيانات المطلوبة بشكل صحيح');
+            return;
+        }
+
+        const previousData = JSON.parse(localStorage.getItem(meterNumber)) || {};
+        const previousReading = previousData.lastReading || 0;
+        const consumption = currentReading - previousReading;
+        const consumptionCost = consumption * pricePerTon;
+        const totalAmount = consumptionCost + contributionFee;
+
+        const newData = {
+            customerName: customerName,
+            lastReading: currentReading,
+            lastConsumption: consumption,
+            lastAmount: totalAmount,
+            totalConsumption: currentReading // إضافة مجموع الاستهلاك
+        };
+
+        localStorage.setItem(meterNumber, JSON.stringify(newData));
+        document.getElementById('displayMeterNumber').textContent = meterNumber;
+        document.getElementById('displayCustomerName').textContent = customerName;
+        document.getElementById('displayCurrentReading').textContent = consumption + ' طن';
+        document.getElementById('Total').textContent = currentReading + ' طن';
+        updateTable(consumptionCost, totalAmount);
+        clearInputs();
+        showTable();
+    }
+
+    // دالة تحديث الجدول
+    function updateTable(consumptionCost, totalAmount) {
+        const tableBody = document.getElementById('tableBody');
+        const row = tableBody.insertRow();
+        row.insertCell(0).textContent = contributionFee.toFixed(0) + '    ';
+        row.insertCell(1).textContent = consumptionCost.toFixed(0) + '    ';
+        row.insertCell(2).textContent = '0';
+        row.insertCell(3).textContent = totalAmount.toFixed(0) + '  ';
+    }
+
+    // دالة مسح المدخلات
+    function clearInputs() {
+        document.getElementById('meterNumber').value = '';
+        document.getElementById('customerName').value = '';
+        document.getElementById('currentReading').value = '';
+        document.getElementById('previousInfo').style.display = 'none';
+        document.getElementById('meterInput').style.display = 'block';
+        document.getElementById('consumptionInput').style.display = 'none';
+    }
+
+    // دالة إظهار الجدول
+    function showTable() {
+        document.getElementById('dataTable').style.display = 'table';
+        document.getElementById('downloadButton').style.display = 'block';
+    }
+    
+
+   
+// دالة الحصول على بيانات جميع العملاء مع الترتيب
+function getAllCustomerData() {
+    let customers = [];
+    for (let i = 0; i < localStorage.length; i++) {
+        const key = localStorage.key(i);
+        const data = JSON.parse(localStorage.getItem(key));
+        customers.push({ meterNumber: key, ...data });
+    }
+    
+    // فرز العملاء بناءً على رقم العداد
+    customers.sort((a, b) => {
+        return parseInt(a.meterNumber) - parseInt(b.meterNumber);
+    });
+    
+    return customers;
+}
+
+// دالة إنشاء HTML للفاتورة
+function createInvoiceHTML(customer) {
+    return `
+    <div class="invoice" style="border: 2px solid black; padding: 8px; margin: 10px; ">
+        <h1 style="width: 96%; margin-right: 1%;">جمعية أمل تسناس للتنمية و الخدمات الاجتماعية والماء الصالح للشرب</h1>
+        <hr>
+        <div>
+        <table style="margin-top: -40px;">
+        <tr>
+        <td style="font-weight: bold; text-align: right; padding: 0px; border: none; border-right: 1px solid black; "  for="noCompte">العداد:</td>
+        <td style="text-align: center; padding: 0px; border: none; border-left: 1px solid black; " id="displayMeterNumber">${customer.meterNumber}</td>
+        <td style="font-weight: bold;text-align: center; padding: 0px; border: none; " for="customerName">الاسم:</td>
+        <td style="text-align: right; padding: 0px; border: none; border-left: 1px solid black; " id="displayCustomerName">${customer.customerName}</td>
+        </tr>
+        <tr>
+        <td style="font-weight: bold;text-align: right; padding: 0px; border: none; border-right: 1px solid black; " for="currentReading">الاستهلاك:</td>
+        <td style="text-align: center; padding: 0px; border: none; border-left: 1px solid black; " id="displayCurrentReading"> ${customer.lastConsumption} طن </td>
+        <td style="font-weight: bold;text-align: center; padding: 0px; border: none;" for="Total">المجموع:</td>
+        <td style="text-align: center; padding: 0px; border: none; border-left: 1px solid black; " id="Total">${customer.totalConsumption} طن</td>
+        </tr>
+        <br>
+        <br>
+        </table>
+        
+        </div>
+        <table style="width: 100%; border-collapse: collapse; margin-top: 10px;">
+            <tr>
+                <td>المساهمة</td>
+                <td>الاستهلاك</td>
+                <td>الغرامة</td>
+                <td>المجموع</td>
+            </tr>
+            <tr>
+                <td>${contributionFee.toFixed(0)}  </td>
+                <td>${(customer.lastAmount - contributionFee).toFixed(0)}  </td>
+                <td>0</td>
+                <td>${customer.lastAmount.toFixed(0)}  </td>
+            </tr>
+        </table>
+        <table style="width: 100%; border-collapse: collapse; border: 1px solid #ddd; margin-top: 10px;">
+            <tr>
+                <th style="width: 70%; padding: 15px; text-align: right; border: 1px solid #ddd;">
+                    <h4 style="margin: 0;">توقيع الزبون: </h4>
+                </th>
+                <th style="width: 30%; padding: 15px; text-align: left; border: 1px solid #ddd;">
+                    <h3 id="currentDate" style="margin: 0;">${getCurrentDate()}</h3>
+                </th>
+            </tr>
+        </table>
+    </div>
+    `;
+}
+
+// دالة للحصول على التاريخ الحالي بتنسيق شهر/سنة
+function getCurrentDate() {
+    const now = new Date();
+    // نطرح شهر واحد من التاريخ الحالي
+    now.setMonth(now.getMonth() - 1);
+    const month = String(now.getMonth() + 1).padStart(2, '0');
+    const year = now.getFullYear();
+    return `${month}/${year}`;
+}
+
+
+// دالة إنشاء ومشاركة PDF
+async function downloadPDF() {
+    window.btns.style.display = 'none';
+    window.container.style.display = 'none';
+    window.dataTable.style.display = 'none';
+    const { jsPDF } = window.jspdf;
+    const doc = new jsPDF('p', 'mm', 'a4'); // اتجاه عمودي
+    
+    const customers = getAllCustomerData(); // الآن هذه البيانات مرتبة
+    let allInvoicesHTML = '';
+    
+    for (let i = 0; i < customers.length; i += 3) {
+        allInvoicesHTML += `
+            <div class="invoice-page" style="page-break-after: always; width: 210mm; height: 297mm; padding-right: 10%; padding-top: 2%; padding-left: -6%;">
+                <div class="customer-row" style="height: 50%; margin-bottom: -25%; display: flex;  ">
+                    <div class="invoice" style="width: 48%; ">
+                        ${createInvoiceHTML(customers[i])}
+                    </div>
+                    <div class="invoice" style="width: 48%; margin-right:4%;">
+                        ${createInvoiceHTML(customers[i])}
+                    </div>
+                   
+                </div>
+                ${customers[i+1] ? `
+                    <div class="customer-row" style="height: 33%; display: flex;">
+                        <div class="invoice" style="width: 48%; ">
+                            ${createInvoiceHTML(customers[i+1])}
+                        </div>
+                        <div class="invoice" style="width: 48%; height: 33%; margin-right:4%;">
+                            ${createInvoiceHTML(customers[i+1])}
+                        </div>
+                    </div>
+          
+                    <div class="customer-row" style="height: 33%; display: flex;">
+                    <div class="invoice" style="width: 48%; ">
+                    ${createInvoiceHTML(customers[i+2])}
+                    </div>
+                    <div class="invoice" style="width: 48%; height: 33%; margin-right:4%;">
+                    ${createInvoiceHTML(customers[i+2])}
+                    </div>
+                    </div>
+                    
+                ` : ''}
+            </div>
+        `;
+    }
+    
+    const tempDiv = document.createElement('div');
+    tempDiv.innerHTML = allInvoicesHTML;
+    document.body.appendChild(tempDiv);
+    
+    const pages = tempDiv.querySelectorAll('.invoice-page');
+    
+    const addPage = (page) => {
+        return new Promise((resolve) => {
+            html2canvas(page, {
+                scale: 2,
+                useCORS: true,
+                logging: true
+            }).then(canvas => {
+                const imgData = canvas.toDataURL('image/png');
+                const imgWidth = 210; // عرض A4 بالملم
+                const imgHeight = 297; // ارتفاع A4 بالملم
+                
+                doc.addImage(imgData, 'PNG', 0, 0, imgWidth, imgHeight);
+                
+                if (page !== pages[pages.length - 1]) {
+                    doc.addPage();
+                }
+                
+                resolve();
+            });
+        });
+    };
+    
+    const generateAndSharePDF = async () => {
+        for (let page of pages) {
+            await addPage(page);
+        }
+        
+        // تحويل PDF إلى Blob
+        const pdfBlob = doc.output('blob');
+        
+        // إنشاء ملف من الـ Blob
+        const pdfFile = new File([pdfBlob], 'جميع الفواتير.pdf', { type: 'application/pdf' });
+        
+        // محاولة مشاركة الملف
+        if (navigator.share) {
+            try {
+                await navigator.share({
+                    files: [pdfFile],
+                    title: 'تقرير إدارة المياه',
+                    text: 'مرفق تقرير إدارة المياه'
+                });
+                console.log('تمت مشاركة الملف بنجاح');
+            } catch (error) {
+                console.error('حدث خطأ أثناء محاولة المشاركة:', error);
+                // في حالة فشل المشاركة، نقوم بتنزيل الملف مباشرة
+                const url = URL.createObjectURL(pdfBlob);
+                const a = document.createElement('a');
+                a.style.display = 'none';
+                a.href = url;
+                a.download = 'جميع الفواتير.pdf';
+                document.body.appendChild(a);
+                a.click();
+                URL.revokeObjectURL(url);
+
+            }
+        } else {
+            // إذا كانت المشاركة غير مدعومة، نقوم بتنزيل الملف مباشرة
+            doc.save('جميع الفواتير.pdf');
+     
+        
+        }
+        
+       /* document.body.removeChild(tempDiv);*/
+    };
+    
+    generateAndSharePDF();
+    
+}
+
+
+    // دالة تنزيل الصورة
+    function downloadImage() {
+        const customerName = document.getElementById('displayCustomerName').textContent;
+        const originalTable = document.querySelector("#dataTable");
+        
+        // نسخ الجدول الأصلي إلى القسمين الجديدين
+        document.getElementById('dataTable1').innerHTML = originalTable.outerHTML;
+        document.getElementById('dataTable2').innerHTML = originalTable.outerHTML;
+        
+        // إظهار قسم الطباعة المزدوجة
+        document.getElementById('doublePrintArea').style.display = 'block';
+
+        html2canvas(document.querySelector("#doublePrintArea")).then(canvas => {
+            const image = canvas.toDataURL("image/png").replace("image/png", "image/octet-stream");
+            const link = document.createElement('a');
+            link.download = `${customerName}.png`;
+            link.href = image;
+            link.click();
+
+            // إخفاء قسم الطباعة المزدوجة بعد التنزيل
+            document.getElementById('doublePrintArea').style.display = 'none';
+        });
+    }
+
+    // تنفيذ فحص انتهاء الصلاحية عند تحميل الصفحة
+    checkExpiration();
+// test
+function downloadCustomerData() {
+    // استرجاع جميع البيانات المخزنة في localStorage
+    let allData = [];
+    
+    // التكرار عبر جميع المفاتيح في localStorage
+    for (let i = 0; i < localStorage.length; i++) {
+        const meterNumber = localStorage.key(i);
+        const data = JSON.parse(localStorage.getItem(meterNumber));
+
+        // إضافة البيانات إلى مصفوفة
+        if (data) {
+            allData.push({
+                meterNumber: meterNumber,
+                customerName: data.customerName,
+                lastReading: data.lastReading,
+                lastConsumption: data.lastConsumption,
+                lastAmount: data.lastAmount,
+                totalConsumption: data.totalConsumption
+            });
+        }
+    }
+
+    // تنسيق البيانات كنص
+    let fileContent = 'رقم العداد,اسم العميل,القراءة السابقة,الاستهلاك الأخير,المبلغ الإجمالي,إجمالي الاستهلاك\n';
+    
+    allData.forEach(entry => {
+        fileContent += `${entry.meterNumber},${entry.customerName},${entry.lastReading},${entry.lastConsumption},${entry.lastAmount},${entry.totalConsumption}\n`;
+    });
+
+    // إنشاء Blob من البيانات مع تحديد الترميز كـ UTF-8
+    const blob = new Blob([fileContent], { type: 'text/plain; charset=utf-8' });
+    
+    // إنشاء رابط لتحميل الملف
+    const link = document.createElement('a');
+    link.href = URL.createObjectURL(blob);
+    link.download = 'customer_data.txt';  // اسم الملف الذي سيتم تنزيله
+    
+    // محاكاة الضغط على الرابط لتنزيل الملف
+    link.click();
+}
+
+// test
+
+// -  ew test
+
+
+
+// test 
+
+function readFileAndStoreData() {
+    // تعريف البيانات كمصفوفة داخل الكود
+    const fileContent = `رقم العداد,اسم العميل,القراءة السابقة,الاستهلاك الأخير,المبلغ الإجمالي,إجمالي الاستهلاك
+49,صبري حماد,36,3,500,36
+2,العنبر محمد,4,4,600,4
+17,البصراوي لحسين,0,0,200,0
+52,زدودعبدالغني,203,5,700,203
+98,الحميد لحسن ,3,3,500,3
+21,اقمري عبدالله,84,0,200,84
+38,بليش على,134,4,600,134
+66,بوعلام المصطفى,105,6,800,105
+10,صفوان حسن,22,0,200,22
+57,الناجى عبد العزيز,17,0,200,17
+64,بوعلام عبدالله,122,2,400,122
+73,المغراوي سعيد,164,6,800,164
+68,المغراوي لحبيب,274,4,600,274
+41,بليش سعيد,177,9,1100,177
+69,بن لحبيب,68,3,500,68
+15,اكوشام حماد,118,4,600,118
+30,اجوب,50,1,300,50
+8,العنبر لحس,69,0,200,69
+13,الوزي بوجمعة,115,4,600,115
+29,المدرسة,62,1,300,62
+16,تمغريت حسن,331,4,600,331
+5,حسنى بوجمعة,91,4,600,91
+56,الناجى محمد,78,2,400,78
+26,بنعد محمد,79,3,500,79
+86,زدودجمال,16,0,200,16
+72,حسنى عبدالملك,183,6,800,183
+88,الناجى حماد,51,3,500,51
+96,خليل حمد,55,2,400,55
+81,زدودحمد,3,0,200,3
+62,زعفر سعيد,102,3,500,102
+40,بليش محمد,98,6,800,98
+18,تمغريت سعيد,236,10,1200,236
+20,اقمري لحسن,121,4,600,121
+28,بنعد عبدالرحمن,89,3,500,89
+31,اجوب محمد ,100,24,2600,100
+45,ؤحموا محمد,35,0,200,35
+58,الناجى لحسين,41,1,300,41
+79,زدودلحسين,90,3,500,90
+32,القمري لحسين,30,2,400,30
+48,صبر محمد,32,1,300,32
+74,المغراوي حسن,147,5,700,147
+91,زعفر محمد,8,3,500,8
+46,بليش حمد,127,7,900,127
+78,المغراوي عبدالله,155,5,700,155
+60,لعلالي عزيز,107,3,500,107
+14,الوزي محمد,58,0,200,58
+50,خليل محمد,72,2,400,72
+54,المصدق عبد العزيز,3,0,200,3
+47,العماري حسن,108,6,800,108
+55,المصدق سليمان,120,6,800,120
+27,بنعد لكبير,82,0,200,82
+95,لبحري محمد,97,4,600,97
+76,لعلالي رضوان,82,5,700,82
+63,بوعلام حسن,61,1,300,61
+51,سراجي حماد,3,0,200,3
+23,هلال محمد,92,1,300,92
+33,بليش عبد الملك,31,0,200,31
+6,العماري حماد,62,3,500,62
+93,زعفر حماد,44,2,400,44
+4,حسنى حسن,62,3,500,62
+42,بوشلي عبدالله,55,2,400,55
+83,الناجى عبد الرحمن,77,4,600,77
+61,زعفر عبد الملك,63,1,300,63
+90,الناجى براهيم,78,3,500,78
+80,زدودمحمد,70,2,400,70
+67,بوعلام حماد,101,4,600,101
+85,الناجى محمد,61,-1,100,61
+75,المغراوي محمد,172,3,500,172
+89,الناجى حسن,50,1,300,50
+97,لعلالي محمد,121,4,600,121
+35,هلال عبدالرحمن,96,3,500,96
+70,حسنى محمد,163,6,800,163
+77,الوزي لحبيب,88,0,200,88
+3,حسنى حمد,41,1,300,41
+19,اقمري تهامي,73,2,400,73
+36,اجوب لحسين,62,6,800,62
+11,الفقير حسن,67,3,500,67
+37,اجوب حماد,94,5,700,94
+65,بوعلام محمد,41,0,200,41
+24,الوزي حس,90,2,400,90
+39,بليش حسن,97,5,700,97
+44,اقمري محمد,12,0,200,12
+1,الخطاب محمد,20,4,600,20
+87,زدودعبد الرحيم,24,0,200,24
+71,الفقير لحسن,89,1,300,89
+34,بليش براهيم,32,1,300,32
+84,بوعلام محمد,70,1,300,70
+43,المرزوقي عبدالعالي,9,0,200,9
+53,لعلالي عمر,75,3,500,75
+22,الحمود محمد,154,6,800,154
+9,صفوان محمد,0,0,200,0
+12,اقمران حسن,58,4,600,58
+7,اقمري حسن,27,0,200,27
+92,زعفر حسن,50,0,200,50
+94,لبحر ي لحسين,119,3,500,119
+59,بليش جواد,157,10,1200,157
+82,الناجى حسن,87,3,500,87
+25,تزوض المصطفى,116,5,700,116
+`;
+
+    // تحليل البيانات من النص
+    const rows = fileContent.split('\n');
+    const headers = rows[0].split(',');
+    
+    // التكرار عبر الصفوف لتحليل البيانات
+    for (let i = 1; i < rows.length; i++) {
+    const columns = rows[i].split(',');
+    
+    if (columns.length === headers.length) {
+    const meterNumber = columns[0].trim();
+    const customerName = columns[1].trim();
+    const lastReading = parseFloat(columns[2].trim());
+    const lastConsumption = parseFloat(columns[3].trim());
+    const lastAmount = parseFloat(columns[4].trim());
+    const totalConsumption = parseFloat(columns[5].trim());
+    
+    // التحقق من وجود البيانات في localStorage
+    if (!localStorage.getItem(meterNumber)) {
+    const newData = {
+    customerName: customerName,
+    lastReading: lastReading,
+    lastConsumption: lastConsumption,
+    lastAmount: lastAmount,
+    totalConsumption: totalConsumption
+    };
+    
+    // تخزين البيانات باستخدام رقم العداد كمفتاح
+    localStorage.setItem(meterNumber, JSON.stringify(newData));
+    }
+    }
+    }
+
+    alert("تم تحميل البيانات بنجاح!");
+}
+
+// استدعاء الدالة عند تحميل الصفحة
+window.onload = function() {
+    readFileAndStoreData();
+};
+
+
+// end
+
+
+
+// end
+
+
+/*
+function readFileAndStoreData() {
+    // استخدام fetch لتحميل الملف النصي
+    fetch('customer_data.txt')  // اسم الملف الذي يحتوي على البيانات
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('فشل في تحميل الملف');
+            }
+            return response.text();  // قراءة الملف كنص
+        })
+        .then(fileContent => {
+            // تحليل البيانات من النص
+            const rows = fileContent.split('\n');  // تقسيم النص إلى صفوف بناءً على السطر الجديد
+            const headers = rows[0].split(',');  // تقسيم السطر الأول إلى رؤوس الأعمدة
+            
+            // التكرار عبر الصفوف لتحليل البيانات
+            for (let i = 1; i < rows.length; i++) {
+                const columns = rows[i].split(',');  // تقسيم كل صف إلى أعمدة
+
+                // التأكد من أن الصف يحتوي على البيانات الصحيحة
+                if (columns.length === headers.length) {
+                    const meterNumber = columns[0].trim();
+                    const customerName = columns[1].trim();
+                    const lastReading = parseFloat(columns[2].trim());
+                    const lastConsumption = parseFloat(columns[3].trim());
+                    const lastAmount = parseFloat(columns[4].trim());
+                    const totalConsumption = parseFloat(columns[5].trim());
+
+                    // تخزين البيانات في localStorage
+                    const newData = {
+                        customerName: customerName,
+                        lastReading: lastReading,
+                        lastConsumption: lastConsumption,
+                        lastAmount: lastAmount,
+                        totalConsumption: totalConsumption
+                    };
+
+                    // تخزين البيانات باستخدام رقم العداد كمفتاح
+                    localStorage.setItem(meterNumber, JSON.stringify(newData));
+                }
+            }
+
+            alert("تم تحميل البيانات بنجاح!");
+        })
+        .catch(error => {
+            console.error('حدث خطأ:', error);
+            alert('فشل في قراءة الملف');
+        });
+}
+
+// استدعاء الدالة عند تحميل الصفحة
+window.onload = function() {
+    readFileAndStoreData();
+};
+*/
+
+// test end
+    
+    
+</script>
+</body>
+</html>
