@@ -526,7 +526,7 @@ async function downloadPDF() {
     const customers = getAllCustomerData(); // الآن هذه البيانات مرتبة
     let allInvoicesHTML = '';
     
-    for (let i = 0; i < customers.length; i += 3) {
+    for (let i = 0; i < 15; i += 3) {
         allInvoicesHTML += `
             <div class="invoice-page" style="page-break-after: always; width: 210mm; height: 297mm; padding-right: 10%; padding-top: 2%; padding-left: -6%;">
                 <div class="customer-row" style="height: 50%; margin-bottom: -25%; display: flex;  ">
